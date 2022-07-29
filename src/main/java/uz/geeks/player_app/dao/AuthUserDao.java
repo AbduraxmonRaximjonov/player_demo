@@ -1,9 +1,8 @@
 package uz.geeks.player_app.dao;
 
 import org.hibernate.Session;
-import uz.jl.java_ee.configs.HibernateConfigurer;
-import uz.jl.java_ee.domains.AuthUser;
-import uz.jl.java_ee.service.AuthUserService;
+import uz.geeks.player_app.configs.HibernateConfigurer;
+import uz.geeks.player_app.domains.AuthUser;
 
 import java.util.List;
 import java.util.Optional;

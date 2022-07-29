@@ -27,7 +27,7 @@
 //            return new AuthUserService(authUserDao());
 //        }
 
-        @SuppressWarnings("raw_types")
+//        @SuppressWarnings("raw_types")
 //        public static <T> T getBean(Class<T> clazz) {
 //            return switch (clazz.getSimpleName()) {
 //                case "MusicPlayerDao" -> (T) MusicPlayerDao();

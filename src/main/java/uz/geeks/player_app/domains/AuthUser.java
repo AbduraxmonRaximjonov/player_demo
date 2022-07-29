@@ -19,6 +19,7 @@ public class AuthUser {
 
     private String firstname;
     private String lastname;
+    @Column(unique = true, nullable = false)
     private String email;
     @Column(unique = true, nullable = false)
     private String username;
@@ -29,6 +30,7 @@ public class AuthUser {
     @Builder.Default
     @Enumerated(EnumType.STRING)
     private Role role = Role.USER;
+    @Column(unique = true, nullable = false)
     private String phoneNumber;
 
     public enum Role {

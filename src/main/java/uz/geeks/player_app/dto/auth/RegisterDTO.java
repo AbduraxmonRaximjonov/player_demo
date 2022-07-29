@@ -1,8 +1,8 @@
 package uz.geeks.player_app.dto.auth;
 
 import lombok.*;
-import uz.jl.java_ee.domains.AuthUser;
-import uz.jl.java_ee.util.Utils;
+import uz.geeks.player_app.domains.AuthUser;
+import uz.geeks.player_app.util.Utils;
 
 @Getter
 @Setter
@@ -11,7 +11,11 @@ import uz.jl.java_ee.util.Utils;
 @ToString
 @Builder
 public class RegisterDTO {
+    private String firstname;
+    private String lastname;
     private String username;
+    private String email;
+    private String phoneNumber;
     private String password;
     private String confirmPassword;
 

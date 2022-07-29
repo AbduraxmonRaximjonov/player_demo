@@ -1,13 +1,11 @@
 package uz.geeks.player_app.service;
 
 import lombok.NonNull;
-import uz.jl.java_ee.container.ApplicationContext;
-import uz.jl.java_ee.dao.AuthUserDao;
-import uz.jl.java_ee.dao.Dao;
-import uz.jl.java_ee.domains.AuthUser;
-import uz.jl.java_ee.dto.auth.RegisterDTO;
-import uz.jl.java_ee.exceptions.BadRequestException;
-import uz.jl.java_ee.util.Utils;
+import uz.geeks.player_app.dao.AuthUserDao;
+import uz.geeks.player_app.domains.AuthUser;
+import uz.geeks.player_app.dto.auth.RegisterDTO;
+import uz.geeks.player_app.exceptions.BadRequestException;
+import uz.geeks.player_app.util.Utils;
 
 import java.util.Objects;
 

@@ -2,6 +2,7 @@ package uz.geeks.player_app.domains;
 
 import jakarta.persistence.*;
 import lombok.*;
+import uz.geeks.player_app.dto.UploadsDTO;
 
 import java.time.LocalDateTime;
 
@@ -25,6 +26,7 @@ public class Uploads {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String originalName;
+    @Column(unique = true, nullable = false)
     private String generatedName;
     private String contentType;
     private String url;
@@ -33,5 +35,14 @@ public class Uploads {
 
     @Column(columnDefinition = "boolean default false")
     private boolean template;
+
+    public static Uploads toDomain(UploadsDTO dto) {
+        return Uploads.builder()
+                .originalName(dto.getOriginalName())
+                .generatedName(dto.getGeneratedName())
+                .contentType(dto.getContentType())
+                .size(dto.getSize())
+                .build();
+    }
 
 }

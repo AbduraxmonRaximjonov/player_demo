@@ -2,8 +2,8 @@ package uz.geeks.player_app.dao;
 
 
 import org.hibernate.Session;
-import uz.jl.java_ee.configs.HibernateConfigurer;
-import uz.jl.java_ee.domains.Uploads;
+import uz.geeks.player_app.configs.HibernateConfigurer;
+import uz.geeks.player_app.domains.Uploads;
 
 import java.util.List;
 import java.util.Objects;

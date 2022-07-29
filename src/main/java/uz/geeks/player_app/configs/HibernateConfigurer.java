@@ -26,7 +26,7 @@ public class HibernateConfigurer {
                 settings.put(Environment.DRIVER, "org.postgresql.Driver");
                 settings.put(Environment.URL, "jdbc:postgresql://localhost:5432/players");
                 settings.put(Environment.USER, "postgres");
-                settings.put(Environment.PASS, "12345");
+                settings.put(Environment.PASS, "1212");
                 settings.put(Environment.SHOW_SQL, "true");
                 settings.put(Environment.HBM2DDL_AUTO, "update");
                 settings.put(Environment.FORMAT_SQL, "true");

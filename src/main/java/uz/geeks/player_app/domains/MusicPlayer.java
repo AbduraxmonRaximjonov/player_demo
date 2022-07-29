@@ -1,15 +1,22 @@
 package uz.geeks.player_app.domains;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
+import lombok.*;
 
 /**
  * @Author :  Asliddin Ziyodullaev
  * @Date :  17:31   29/07/22
  * @Project :  player_app
  */
+
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@Builder
+@Entity
 public class MusicPlayer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -4,14 +4,12 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.ImageType;
 import org.apache.pdfbox.rendering.PDFRenderer;
 import org.apache.pdfbox.tools.imageio.ImageIOUtil;
-import uz.jl.java_ee.configs.ThreadPoolExecutorConfig;
-import uz.jl.java_ee.container.ApplicationContext;
-import uz.jl.java_ee.dao.BookDao;
-import uz.jl.java_ee.dao.FileStorageDao;
-import uz.jl.java_ee.domains.Uploads;
-import uz.jl.java_ee.dto.UploadsDTO;
-import uz.jl.java_ee.exceptions.BadRequestException;
-import uz.jl.java_ee.util.Utils;
+import uz.geeks.player_app.configs.ThreadPoolExecutorConfig;
+import uz.geeks.player_app.dao.FileStorageDao;
+import uz.geeks.player_app.domains.Uploads;
+import uz.geeks.player_app.dto.UploadsDTO;
+import uz.geeks.player_app.exceptions.BadRequestException;
+import uz.geeks.player_app.util.Utils;
 
 import javax.servlet.http.Part;
 import java.awt.image.BufferedImage;
@@ -25,7 +23,7 @@ import java.util.function.Function;
 public class FileStorageService extends Service<FileStorageDao> {
     public static final Path rootPath = Paths.get("home/asliddin/uploads");
 
-    public static final BookDao bookDao = ApplicationContext.getBean(BookDao.class);
+//    public static final BookDao bookDao = ApplicationContext.getBean(BookDao.class);
 
     public FileStorageService(FileStorageDao dao) {
         super(dao);
@@ -45,7 +43,7 @@ public class FileStorageService extends Service<FileStorageDao> {
             BufferedImage bufferedImage = pdfRenderer.renderImage(0, 10, ImageType.RGB);
             UploadsDTO coverUploadsDto = getCoverUploadsDto(dto);
             Uploads uploads = create(coverUploadsDto);
-            bookDao.updateCoverId(dto.getBookId(), uploads.getId());
+//            bookDao.updateCoverId(dto.getBookId(), uploads.getId());
             ImageIOUtil.writeImage(bufferedImage, rootPath.resolve(coverUploadsDto.getGeneratedName()).toString(), 10);
         } catch (IOException e) {
             throw new RuntimeException(e);
