@@ -1,6 +1,7 @@
 package uz.geeks.player_app.service;
 
 import lombok.NonNull;
+import uz.geeks.player_app.container.ApplicationContext;
 import uz.geeks.player_app.dao.AuthUserDao;
 import uz.geeks.player_app.domains.AuthUser;
 import uz.geeks.player_app.dto.auth.RegisterDTO;
@@ -10,6 +11,16 @@ import uz.geeks.player_app.util.Utils;
 import java.util.Objects;
 
 public class AuthUserService extends Service<AuthUserDao> {
+
+    private static AuthUserService instance;
+
+    private static final AuthUserDao authUserDao = AuthUserDao.getInstance();
+    public static AuthUserService getInstance() {
+        if (instance == null) {
+            instance = new AuthUserService(authUserDao);
+        }
+        return instance;
+    }
 
     public AuthUserService(AuthUserDao dao) {
         super(dao);

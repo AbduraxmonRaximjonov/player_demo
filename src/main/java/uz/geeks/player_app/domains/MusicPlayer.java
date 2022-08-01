@@ -2,6 +2,7 @@ package uz.geeks.player_app.domains;
 
 import jakarta.persistence.*;
 import lombok.*;
+import uz.geeks.player_app.dto.MusicPlayerDto;
 
 /**
  * @Author :  Asliddin Ziyodullaev
@@ -23,14 +24,32 @@ public class MusicPlayer {
     private Long id;
     private String name;
     private String author;
-    private int pageCount;
+    private double duration;
+    @Enumerated(value = EnumType.STRING)
     private Genre genre;
-    private String seconds;
+    @Column(columnDefinition = "varchar default 'https://music.amazon.com/'")
+    private String chrome_url;
+    @Column(columnDefinition = "varchar default 'https://www.youtube.com/c/MagicMusicGroup'")
+    private String youTube_url;
+    private int onClick;
     @OneToOne
     private Uploads file;
 
     @OneToOne
-    private Uploads cover;
+    private Cover cover;
+
+
+    public static MusicPlayer toDomain(MusicPlayerDto dto) {
+        return MusicPlayer.builder()
+                .name(dto.getName())
+                .author(dto.getAuthor())
+                .genre(Genre.findGenreByName(dto.getGenre()))
+                .chrome_url(dto.getChrome_url())
+                .youTube_url(dto.getYouTube_url())
+                .file(dto.getFile())
+                .cover(dto.getCover())
+                .build();
+    }
 
 
     public enum Genre {
@@ -45,6 +64,7 @@ public class MusicPlayer {
         MAQOM,
         NASHIDA,
         DISCO,
+        MOTIVATION,
         OTHER;
 
         public static Genre findGenreByName(String genreName) {

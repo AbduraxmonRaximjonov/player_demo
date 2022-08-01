@@ -10,6 +10,14 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class UploadsDao implements Dao<Uploads> {
+    private static UploadsDao instance;
+
+    public static UploadsDao getInstance() {
+        if (instance == null) {
+            instance = new UploadsDao();
+        }
+        return instance;
+    }
     @Override
     public Uploads create(Uploads entity) {
         Session session = HibernateConfigurer.getSession();

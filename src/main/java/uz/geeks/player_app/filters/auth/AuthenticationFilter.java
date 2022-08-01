@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
 
-@WebFilter(urlPatterns = "/*")
+//@WebFilter(urlPatterns = "/*")
 public class AuthenticationFilter implements Filter {
     public static final List<Object> WHITE_LIST = List.of(
             "/auth/login",

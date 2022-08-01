@@ -1,7 +1,13 @@
 package uz.geeks.player_app.util;
 
 import lombok.NonNull;
+import lombok.SneakyThrows;
 import org.mindrot.jbcrypt.BCrypt;
+
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import java.io.File;
 
 /**
  * @author "Elmurodov Javohir"
@@ -9,6 +15,8 @@ import org.mindrot.jbcrypt.BCrypt;
  * java-ee/IntelliJ IDEA
  */
 public class Utils {
+
+    public static String ROOT_PATH = "/home/ubuntu/player_app/src/main/resources/downloads";
     public static String COVER_EXTENSION = "jpg";
     public static final String COVER_CONTENT_TYPE = "image/" + COVER_EXTENSION;
 
@@ -21,6 +29,15 @@ public class Utils {
             }
         }
         return true;
+    }
+
+    @SneakyThrows
+    public static double getDurationOfMusic(String generatedName){
+        File file = new File(ROOT_PATH+generatedName);
+        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(file);
+        AudioFormat format = audioInputStream.getFormat();
+        long frames = audioInputStream.getFrameLength();
+        return (frames+0.0) / format.getFrameRate();
     }
 
     public static String generateUniqueFileName() {

@@ -1,11 +1,15 @@
 package uz.geeks.player_app.service;
 
+import lombok.SneakyThrows;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.ImageType;
 import org.apache.pdfbox.rendering.PDFRenderer;
 import org.apache.pdfbox.tools.imageio.ImageIOUtil;
 import uz.geeks.player_app.configs.ThreadPoolExecutorConfig;
+import uz.geeks.player_app.container.ApplicationContext;
 import uz.geeks.player_app.dao.FileStorageDao;
+import uz.geeks.player_app.dao.MusicPlayerDao;
+import uz.geeks.player_app.dao.UploadsDao;
 import uz.geeks.player_app.domains.Uploads;
 import uz.geeks.player_app.dto.UploadsDTO;
 import uz.geeks.player_app.exceptions.BadRequestException;
@@ -21,43 +25,31 @@ import java.nio.file.StandardCopyOption;
 import java.util.function.Function;
 
 public class FileStorageService extends Service<FileStorageDao> {
-    public static final Path rootPath = Paths.get("home/asliddin/uploads");
+    public static final Path rootPath = Paths.get("/home/ubuntu/player_app/src/main/webapp/audios");
 
-//    public static final BookDao bookDao = ApplicationContext.getBean(BookDao.class);
+    public static final UploadsDao uploadsDao = UploadsDao.getInstance();
+    private static FileStorageService instance;
+    private static final FileStorageDao fileStorageDao = FileStorageDao.getInstance();
+
+    public static FileStorageService getInstance() {
+        if (instance == null) {
+            instance = new FileStorageService(fileStorageDao);
+        }
+        return instance;
+    }
 
     public FileStorageService(FileStorageDao dao) {
         super(dao);
-        createUploadingFolders(rootPath);
+        createUploadingFolders();
     }
 
 
     public void create(Part file, UploadsDTO dto) {
         ThreadPoolExecutorConfig.submit(() -> copyFile(file, dto.getGeneratedName()));
-        ThreadPoolExecutorConfig.submit(() -> generateCoverAndUpdateInitialCover(file, dto));
     }
 
-    private void generateCoverAndUpdateInitialCover(Part is, UploadsDTO dto) {
-        try {
-            PDDocument document = PDDocument.load(is.getInputStream());
-            PDFRenderer pdfRenderer = new PDFRenderer(document);
-            BufferedImage bufferedImage = pdfRenderer.renderImage(0, 10, ImageType.RGB);
-            UploadsDTO coverUploadsDto = getCoverUploadsDto(dto);
-            Uploads uploads = create(coverUploadsDto);
-//            bookDao.updateCoverId(dto.getBookId(), uploads.getId());
-            ImageIOUtil.writeImage(bufferedImage, rootPath.resolve(coverUploadsDto.getGeneratedName()).toString(), 10);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
-    private UploadsDTO getCoverUploadsDto(UploadsDTO dto) {
-        return UploadsDTO.builder()
-                .originalName(Utils.getCoverFileName(dto.getOriginalName()))
-                .generatedName(Utils.generateUniqueCoverName())
-                .size(0)
-                .contentType(Utils.COVER_CONTENT_TYPE)
-                .build();
-    }
+
 
     private void copyFile(Part is, String filename) {
         try {
@@ -82,10 +74,10 @@ public class FileStorageService extends Service<FileStorageDao> {
 
     private final Function<UploadsDTO, Uploads> toDomain = Uploads::toDomain;
 
-    private void createUploadingFolders(Path rootPath) {
-        if (!Files.exists(rootPath)) {
+    private void createUploadingFolders() {
+        if (!Files.exists(FileStorageService.rootPath)) {
             try {
-                Files.createDirectories(rootPath);
+                Files.createDirectories(FileStorageService.rootPath);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

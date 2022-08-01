@@ -14,7 +14,7 @@ import java.io.IOException;
  * java-ee/IntelliJ IDEA
  */
 
-@WebFilter(value = "/MusicPlayers/add")
+//@WebFilter(value = "/musics/add")
 public class MusicPlayerCreateFilter implements Filter {
 
     @Override

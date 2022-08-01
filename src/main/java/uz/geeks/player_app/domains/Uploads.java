@@ -29,7 +29,7 @@ public class Uploads {
     @Column(unique = true, nullable = false)
     private String generatedName;
     private String contentType;
-    private String url;
+
     private long size;
     private LocalDateTime uploaded_at;
 
@@ -42,6 +42,7 @@ public class Uploads {
                 .generatedName(dto.getGeneratedName())
                 .contentType(dto.getContentType())
                 .size(dto.getSize())
+                .uploaded_at(LocalDateTime.now())
                 .build();
     }
 

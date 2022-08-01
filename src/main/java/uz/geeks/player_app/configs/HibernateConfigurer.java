@@ -7,6 +7,10 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Environment;
+import uz.geeks.player_app.domains.AuthUser;
+import uz.geeks.player_app.domains.Cover;
+import uz.geeks.player_app.domains.MusicPlayer;
+import uz.geeks.player_app.domains.Uploads;
 
 import java.util.Objects;
 import java.util.Properties;
@@ -17,7 +21,7 @@ public class HibernateConfigurer {
     private static Session openSession;
 
     public static SessionFactory getSessionFactory() {
-        if (sessionFactory == null) {
+        if (sessionFactory == null || sessionFactory.isClosed()) {
             try {
                 StandardServiceRegistryBuilder registryBuilder = new StandardServiceRegistryBuilder();
 
@@ -56,8 +60,13 @@ public class HibernateConfigurer {
 //                reflections.get(SubTypes.of(TypesAnnotated.with(Entity.class)).asClass())
 //                        .forEach(sources::addAnnotatedClass);
 
+                sources.addAnnotatedClass(AuthUser.class);
+                sources.addAnnotatedClass(MusicPlayer.class);
+                sources.addAnnotatedClass(Uploads.class);
+                sources.addAnnotatedClass(Cover.class);
                 // Create Metadata
                 Metadata metadata = sources.getMetadataBuilder().build();
+
 
                 // Create SessionFactory
                 sessionFactory = metadata.getSessionFactoryBuilder().build();

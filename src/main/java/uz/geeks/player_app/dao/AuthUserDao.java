@@ -8,6 +8,14 @@ import java.util.List;
 import java.util.Optional;
 
 public class AuthUserDao implements Dao<AuthUser> {
+    private static AuthUserDao instance;
+
+    public static AuthUserDao getInstance() {
+        if (instance == null) {
+            instance = new AuthUserDao();
+        }
+        return instance;
+    }
     @Override
     public AuthUser create(AuthUser entity) {
         Session session = HibernateConfigurer.getSession();
